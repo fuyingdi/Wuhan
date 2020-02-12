@@ -1,0 +1,58 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using DG.Tweening;
+
+public class Player : MonoBehaviour
+{
+    Vector2 StartPos;
+    Vector2 EndPos;
+    Rigidbody2D rb;
+    LineRenderer line;
+    [Range(1,100)]
+    public float force;
+    [Range(0, 1)]
+    public float timescale;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        line = GetComponent<LineRenderer>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            //StartPos设为鼠标的位置
+            StartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            line.positionCount = 2;
+            line.SetPosition(0, (Vector2)transform.position);
+            Time.timeScale = timescale;
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            EndPos =  Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //rb.AddForce(force * (EndPos - StartPos));
+            rb.velocity = (force * (EndPos - StartPos));
+            line.positionCount = 0;
+            Time.timeScale = 1;
+        }
+        if (Input.GetMouseButton(0))
+        {
+            line.SetPosition(0, (Vector2)transform.position);
+            line.SetPosition(1, (Vector2)transform.position+(Vector2) Camera.main.ScreenToWorldPoint(Input.mousePosition) - StartPos);
+        }
+    }
+
+    public void Hurt()
+    {
+        Sequence Blink = DOTween.Sequence();
+        for (int i = 0; i < 3; i++)
+        {
+            Blink.Append(GetComponent<SpriteRenderer>().DOFade(0, 0.1f));
+            Blink.Append(GetComponent<SpriteRenderer>().DOFade(1, 0.1f));
+        }
+    }
+}
