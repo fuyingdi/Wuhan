@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
+
+//public class Delay:MonoBehaviour
+//{
+//    //public static Do()
+//}
 
 public class Player : MonoBehaviour
 {
@@ -13,11 +19,14 @@ public class Player : MonoBehaviour
     public float force;
     [Range(0, 1)]
     public float timescale;
+    public int HP;
+    public bool inevitable;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         line = GetComponent<LineRenderer>();
+        HP = 2;
     }
 
     // Update is called once per frame
@@ -48,11 +57,24 @@ public class Player : MonoBehaviour
 
     public void Hurt()
     {
-        Sequence Blink = DOTween.Sequence();
-        for (int i = 0; i < 3; i++)
+        if (inevitable) return;
+        else
         {
-            Blink.Append(GetComponent<SpriteRenderer>().DOFade(0, 0.1f));
-            Blink.Append(GetComponent<SpriteRenderer>().DOFade(1, 0.1f));
+            inevitable = true;
+            Sequence Blink = DOTween.Sequence();
+            for (int i = 0; i < 3; i++)
+            {
+                Blink.Append(GetComponent<SpriteRenderer>().DOFade(0, 0.1f));
+                Blink.Append(GetComponent<SpriteRenderer>().DOFade(1, 0.1f));
+                Blink.OnComplete(() => { inevitable = false; });
+            }
+            HP--;
+            if (HP <= 0) Die();
+
         }
+    }
+    void Die()
+    {
+        SceneManager.LoadScene(1);
     }
 }
