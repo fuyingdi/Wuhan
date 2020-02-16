@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Main.isPaused) return;
         if (Input.GetMouseButtonDown(0))
         {
             //StartPos设为鼠标的位置
@@ -62,7 +63,7 @@ public class Player : MonoBehaviour
         {
             inevitable = true;
             Sequence Blink = DOTween.Sequence();
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
                 Blink.Append(GetComponent<SpriteRenderer>().DOFade(0, 0.1f));
                 Blink.Append(GetComponent<SpriteRenderer>().DOFade(1, 0.1f));
