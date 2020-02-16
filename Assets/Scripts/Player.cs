@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         line = GetComponent<LineRenderer>();
-        HP = 2;
+        HP = 5;
     }
 
     // Update is called once per frame

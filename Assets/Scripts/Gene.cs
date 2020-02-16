@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class Gene : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public bool isGot;
     void Start()
     {
         
@@ -26,12 +26,16 @@ public class Gene : MonoBehaviour
             transform.DOMoveY(transform.position.y + 0.2f, 0.3f);
             GetComponent<SpriteRenderer>().DOFade(0.0f, 0.3f);
             GetPoint();
+            isGot = true;
         }
     }
 
     void GetPoint()
     {
+        if (isGot) return;
         //修改GameManager里的分数
+        GameManager.Main.CurrentSample++;
+        isGot = true;
         return;
     }
 }
