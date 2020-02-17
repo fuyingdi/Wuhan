@@ -14,8 +14,16 @@ public class LevelMenu : MonoBehaviour
     {
         
     }
-    void Load1()
+    public void Load(int a)
     {
-    
+        SceneManager.LoadScene(a + 1);
+    }
+    public void Quit()
+    {
+        Application.Quit();
+    }
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }
