@@ -21,12 +21,17 @@ public class GameManager : MonoBehaviour
     public int CurrentHealth;
 
     public GameObject PauseMenu;
+    public GameObject WinMenu;
     public bool isPaused;
+
+    public double timer;
+    public float score;
 
     void Start()
     {
         Main = this;
         CurrentHealth = 0;
+        timer = Time.time;
     }
 
     // Update is called once per frame
@@ -46,6 +51,13 @@ public class GameManager : MonoBehaviour
                 PauseMenu.SetActive(false);
                 isPaused = false;
             }
+        }
+        if (CurrentSample >= 12)
+        {
+            print("win");
+            //显示胜利菜单
+            score = (float)(Time.time - timer);
+            WinMenu.SetActive(true);
         }
     }
 }

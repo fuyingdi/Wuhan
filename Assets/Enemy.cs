@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            print("hurt");
+            //print("hurt");
             Player player = collision.gameObject.GetComponent<Player>();
             player.Hurt();
         }
