@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class GameManager : MonoBehaviour
 {
     private static GameManager main;
@@ -22,21 +22,24 @@ public class GameManager : MonoBehaviour
 
     public GameObject PauseMenu;
     public GameObject WinMenu;
+    public GameObject DeadMenu;
+    public TextMeshProUGUI Timer;
     public bool isPaused;
 
-    public double timer;
+    public float timer;
     public float score;
 
     void Start()
     {
         Main = this;
         CurrentHealth = 0;
-        timer = Time.time;
+        timer = Time.unscaledTime;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Timer.text = Utils.timeToFormat((float)Time.unscaledTime - timer);
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused == false)
@@ -52,12 +55,18 @@ public class GameManager : MonoBehaviour
                 isPaused = false;
             }
         }
-        if (CurrentSample >= 12)
+        if (CurrentSample >= TotalSample||(Input.GetKey(KeyCode.P)&&Input.GetKey(KeyCode.Q)))
         {
             print("win");
             //显示胜利菜单
-            score = (float)(Time.time - timer);
+            score = (float)(Time.unscaledTime - timer);
             WinMenu.SetActive(true);
         }
+    }
+
+    public void Die()
+    {
+        DeadMenu.SetActive(true);
+        Time.timeScale = 0;
     }
 }
