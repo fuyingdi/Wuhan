@@ -76,6 +76,6 @@ public class Player : MonoBehaviour
     }
     void Die()
     {
-        SceneManager.LoadScene(1);
+        GameManager.Main.Die();
     }
 }

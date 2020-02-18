@@ -116,11 +116,12 @@ public class WinMenu : MonoBehaviour
         }
         else
         {
+            print(www.downloadHandler.text);
             JsonData result_data = LoadResult(www.downloadHandler.text);
             //print((Score)result_data["top10"][0]);
             if ((string)result_data["status"] == "ok")
             {
-                Rank.text = (string)result_data["rank"];
+                ;//Rank.text = (string)(int)result_data["rank"];
             }
 
         }
