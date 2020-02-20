@@ -15,17 +15,26 @@ public class Player : MonoBehaviour
     Vector2 EndPos;
     Rigidbody2D rb;
     LineRenderer line;
+    AudioSource audioSource;
+
     [Range(1,100)]
     public float force;
     [Range(0, 1)]
     public float timescale;
     public int HP;
     public bool inevitable;
+    [Header("Sounds")]
+    public AudioClip boost;
+    public AudioClip dead;
+    public AudioClip gene;
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource=GetComponent<AudioSource>();
         line = GetComponent<LineRenderer>();
+
         HP = 5;
     }
 
@@ -48,6 +57,8 @@ public class Player : MonoBehaviour
             rb.velocity = (force * (EndPos - StartPos));
             line.positionCount = 0;
             Time.timeScale = 1;
+            audioSource.clip=boost;
+            audioSource.Play();
         }
         if (Input.GetMouseButton(0))
         {
@@ -69,6 +80,7 @@ public class Player : MonoBehaviour
                 Blink.Append(GetComponent<SpriteRenderer>().DOFade(1, 0.1f));
                 Blink.OnComplete(() => { inevitable = false; });
             }
+            audioSource.clip=dead;
             HP--;
             if (HP <= 0) Die();
 
@@ -76,6 +88,8 @@ public class Player : MonoBehaviour
     }
     void Die()
     {
-        SceneManager.LoadScene(1);
+        audioSource.clip=dead;
+        audioSource.Play();
+        GameManager.Main.Die();
     }
 }

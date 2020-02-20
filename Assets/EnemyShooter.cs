@@ -13,6 +13,7 @@ public class EnemyShooter : MonoBehaviour
     [Range(5, 50f)]
     public float shootRange = 5f;
     public GameObject bullet;
+    public AudioClip shoot;
 
     GameObject aimPoint;
     bool isAimed;
@@ -44,10 +45,14 @@ public class EnemyShooter : MonoBehaviour
     void Shoot()
     {
         if (!isAimed) return;
+        AudioSource tempAudio=this.GetComponent<AudioSource>();
+        tempAudio.clip=shoot;
+        tempAudio.Play();
         var _ = Instantiate(bullet, aimPoint.transform.position, Quaternion.identity);
         _.GetComponent<SpriteRenderer>().color = Color.red;
         //var shootRange = 15f;
-        _.transform.DOMove(_.transform.position + (_.transform.position - transform.position).normalized * shootRange*10f,1.5f).OnComplete(()=> { Destroy(_.gameObject); });
+        _.transform.position=new Vector3(_.transform.position.x,_.transform.position.y,0);
+        _.transform.DOMove(_.transform.position + (_.transform.position - transform.position).normalized * shootRange*1f,2f).OnComplete(()=> { Destroy(_.gameObject); });
         shootTimer = shootCD;
     }
     private void OnTriggerEnter2D(Collider2D collision)

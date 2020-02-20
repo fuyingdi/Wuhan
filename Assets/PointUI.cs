@@ -13,6 +13,6 @@ public class PointUI : MonoBehaviour
 
     void Update()
     {
-        tmp.text = GameManager.Main.CurrentSample.ToString() + "/12";
+        tmp.text = GameManager.Main.CurrentSample.ToString() + "/"+GameManager.Main.TotalSample.ToString();
     }
 }

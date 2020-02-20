@@ -5,7 +5,10 @@ using DG.Tweening;
 
 public class Gene : MonoBehaviour
 {
+
+    public AudioClip gene;
     public bool isGot;
+    
     void Start()
     {
         
@@ -21,6 +24,9 @@ public class Gene : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            AudioSource tempAudio=this.GetComponent<AudioSource>();
+            tempAudio.clip=gene;
+            tempAudio.Play();
             Destroy(gameObject, 0.3f);
             transform.DOScale(5f, 0.3f);
             transform.DOMoveY(transform.position.y + 0.2f, 0.3f);
